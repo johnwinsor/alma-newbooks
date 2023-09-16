@@ -6,8 +6,6 @@ export default async function Home() {
   const data = await getData()
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="my-24 w-full">
-      </div>
       <div className="m-2 grid grid-cols-12 gap-2">
         {data.map(d => (
           <div 
