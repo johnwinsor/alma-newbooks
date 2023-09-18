@@ -6,6 +6,10 @@ import Autoplay from 'embla-carousel-autoplay'
 import { PropsWithChildren } from "react";
 import '../app/css/embla.css'
 import '../app/css/sandbox.css'
+import { use } from "react";
+import getData from "@/Components/Data"
+
+// const data = use(getData())
 
 const autoplayOptions = {
   delay: 4000,
