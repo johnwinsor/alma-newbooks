@@ -5,7 +5,6 @@ import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import Autoplay from 'embla-carousel-autoplay'
 import { PropsWithChildren } from "react";
 import '../app/css/embla.css'
-import '../app/css/sandbox.css'
 import { use } from "react";
 
 // const data = use(getData())
@@ -21,7 +20,7 @@ const Carousel = ({ children, ...options }: Props) => {
   const [emblaRef] = useEmblaCarousel(options, [Autoplay(autoplayOptions)]);
 
   return (
-    <div className="embla__viewport mx-auto" ref={emblaRef}>
+    <div className="mx-auto" ref={emblaRef}>
       <div className="flex">{children}</div>
     </div>
   );

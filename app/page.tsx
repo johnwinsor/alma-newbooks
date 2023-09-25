@@ -16,17 +16,19 @@ export default async function Home() {
         <Carousel loop>
           {xml.map((src, i) => {
             return (
-              <div className="h-auto flex-[0_0_100%] mx-auto my-2" key={i}>
-                <div className="flex flex-col items-center justify-between">
+              <div className="h-screen flex-[0_0_100%] mx-auto my-2" key={i}>
+                <div className="relative">
                   <Image
                     src={src.olCoverURL}
                     width={600}
-                    height={800}
+                    height={600}
                     className="object-contain coverImg mx-auto"
                     alt="alt"
                   />
                 </div>
-                <h1 className="text-center">{src.title}</h1>
+                <h1 className="text-center font-bold">{src.title}</h1>
+                <h1 className="text-center">by {src.author}</h1>
+                <h1 className="text-center">Call Number: {src.callno}</h1>
                 {/* <h1 className="text-center">{src.olCoverURL}</h1> */}
               </div>
             );

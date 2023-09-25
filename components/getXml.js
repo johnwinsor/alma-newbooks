@@ -37,7 +37,7 @@ export default async function getXml() {
     
     async function xmlParse(xml) {
     const result = await parseXml(xml);
-    //console.log(result.report.QueryResult.ResultXml.rowset)
+    console.log(result.report.QueryResult.ResultXml.rowset)
     const results = result.report.QueryResult.ResultXml.rowset.Row
     for (const r of results) {
         const item = {}
@@ -46,6 +46,13 @@ export default async function getXml() {
         const cleanTitle = title.replace(/\/$|\.$/, "");
         const lowerCase = cleanTitle.toLowerCase()
         const titleCase = lowerCase.toTitleCase()
+
+        const author = r.Column1
+        const aLowerCase = author.toLowerCase()
+        const authorCase = aLowerCase.toTitleCase()
+
+        const callno = r.Column10
+        const callnoStatus = callno.replace(/Unknown/g, "In Processing");
         
         const isbns = r.Column2
         const isbn = isbns.replace(/;.*/, "");
@@ -59,6 +66,8 @@ export default async function getXml() {
                 console.log(data[key].thumbnail_url)
                 const openLibrary = 'https://covers.openlibrary.org/b/isbn/' + isbn + '-L.jpg'
                 item.title = titleCase
+                item.author = authorCase
+                item.callno = callnoStatus
                 item.olCoverURL = openLibrary
             
                 items.push(item)
