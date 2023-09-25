@@ -56,8 +56,8 @@
     bottom: 0;
   }
 
-  /* .coverImg {
-    width: 200px;
+  .coverImg {
+    width: 400px;
     height: auto;
     vertical-align: middle;
     padding:1px;
@@ -65,4 +65,4 @@
     background-color:white;
     -ms-interpolation-mode: bicubic;
   }
-   */
+  
