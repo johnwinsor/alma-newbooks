@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image'
-import getData from "@/Components/getJson"
-import getXml from "@/Components/getXml"
+import getData from "@/components/getJson"
+import getXml from "@/components/getXml"
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
 
