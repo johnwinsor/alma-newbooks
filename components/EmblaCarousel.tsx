@@ -20,7 +20,7 @@ const Carousel = ({ children, ...options }: Props) => {
   const [emblaRef] = useEmblaCarousel(options, [Autoplay(autoplayOptions)]);
 
   return (
-    <div className="mx-auto" ref={emblaRef}>
+    <div className="mx-auto embla" ref={emblaRef}>
       <div className="flex">{children}</div>
     </div>
   );

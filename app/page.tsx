@@ -9,14 +9,14 @@ export default async function Home() {
   //const data = await getData()
   //console.log(data)
   const xml = await getXml()
-  console.log(xml)
+  //console.log(xml)
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex-none min-h-screen flex-col items-center justify-between">
       <div className="h-screen mx-auto my-2">
         <Carousel loop>
           {xml.map((src, i) => {
             return (
-              <div className="h-screen flex-[0_0_100%] mx-auto my-2" key={i}>
+              <div className="h-screen w-auto flex-[0_0_100%] mx-auto my-2" key={i}>
                 <div className="relative">
                   <Image
                     src={src.olCoverURL}
@@ -26,10 +26,11 @@ export default async function Home() {
                     alt="alt"
                   />
                 </div>
-                <h1 className="text-center font-bold">{src.title}</h1>
-                <h1 className="text-center">by {src.author}</h1>
-                <h1 className="text-center">Call Number: {src.callno}</h1>
-                {/* <h1 className="text-center">{src.olCoverURL}</h1> */}
+                <div className="relative caption mx-auto">
+                  <h1 className="text-center font-bold">{src.title}</h1>
+                  <h1 className="text-center">by {src.author}</h1>
+                  <h1 className="text-center">Call Number: {src.callno}</h1>
+                </div>
               </div>
             );
           })}

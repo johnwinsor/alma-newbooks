@@ -21,7 +21,7 @@ export default async function getXml() {
       
     async function getData(isbn) {
         const openLibMetadata = 'https://openlibrary.org/api/books?bibkeys=ISBN:' + isbn + '&format=json'
-        console.log(openLibMetadata)
+        //console.log(openLibMetadata)
         const resp = await fetch(openLibMetadata)
         // The return value is *not* serialized
         // You can return Date, Map, Set, etc.
@@ -34,22 +34,34 @@ export default async function getXml() {
     }
     
     /////////////////////////
+
+    function getAuthor(element) {
+        if (typeof element !== "undefined") {
+            const aLowerCase = element.toLowerCase()
+            const authorCase = aLowerCase.toTitleCase()
+            return authorCase
+        } else {
+            console.log("NO AUTHOR")
+            return ""
+        }
+
+    }
+
+    ////////////////////////
     
     async function xmlParse(xml) {
     const result = await parseXml(xml);
-    console.log(result.report.QueryResult.ResultXml.rowset)
+    //console.log(result.report.QueryResult.ResultXml.rowset)
     const results = result.report.QueryResult.ResultXml.rowset.Row
     for (const r of results) {
         const item = {}
-        //console.log(r.Column2)
         const title = r.Column7
         const cleanTitle = title.replace(/\/$|\.$/, "");
         const lowerCase = cleanTitle.toLowerCase()
         const titleCase = lowerCase.toTitleCase()
 
-        const author = r.Column1
-        const aLowerCase = author.toLowerCase()
-        const authorCase = aLowerCase.toTitleCase()
+        const authorValue = r.Column1
+        const author = getAuthor(authorValue)
 
         const callno = r.Column10
         const callnoStatus = callno.replace(/Unknown/g, "In Processing");
@@ -59,18 +71,20 @@ export default async function getXml() {
 
         const data = await getData(isbn)
         const key = Object.keys(data)[0]
-        console.log(key)
+        //console.log(key)
         try {
             if (data[key].hasOwnProperty('thumbnail_url')) {
-                console.log("YES")
-                console.log(data[key].thumbnail_url)
                 const openLibrary = 'https://covers.openlibrary.org/b/isbn/' + isbn + '-L.jpg'
-                item.title = titleCase
-                item.author = authorCase
-                item.callno = callnoStatus
-                item.olCoverURL = openLibrary
-            
-                items.push(item)
+                if (callnoStatus !== "In Processing") {
+                    item.title = titleCase
+                    item.author = author
+                    item.callno = callnoStatus
+                    item.olCoverURL = openLibrary
+                
+                    items.push(item)
+                } else {
+                    console.log("In Processing")
+                }
             }
         } catch(e) {
             e; // => ReferenceError
@@ -78,6 +92,8 @@ export default async function getXml() {
         }
     }
     //console.log(items)
+    const length = items.length;
+    console.log(length)
     return items;
     }
 
@@ -91,7 +107,7 @@ export default async function getXml() {
     // https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks&limit=25&col_names=true&apikey=l8xx5852c9867ab64264901d17af13574837
 
     const xmlres = await fetch(
-    'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks&limit=25&col_names=true&apikey=l8xx5852c9867ab64264901d17af13574837',
+    'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks&limit=100&col_names=true&apikey=l8xx5852c9867ab64264901d17af13574837',
         {
         method: 'GET',
         headers: {
