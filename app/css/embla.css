@@ -1,24 +1,12 @@
 .embla {
   overflow: hidden;
 }
-.embla__container {
-  display: flex;
+
+.caption {
+max-width: 600px;
 }
-.embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
+
+img {
+  padding-top:2em;
+  padding-bottom: 2em;
 }
-  
-  .coverImg {
-    width: auto;
-    height: 800px;
-    vertical-align: middle;
-    padding:1px;
-    border:1px solid grey;
-    background-color:white;
-    -ms-interpolation-mode: bicubic;
-  }
-  
-  .caption {
-    max-width: 600px;
-  }

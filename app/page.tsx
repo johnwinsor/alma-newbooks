@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-import getData from "@/components/getJson"
+//import getData from "@/components/getJson"
 import getXml from "@/components/getXml"
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
@@ -11,25 +11,25 @@ export default async function Home() {
   const xml = await getXml()
   //console.log(xml)
   return (
-    <main className="flex-none min-h-screen flex-col items-center justify-between">
-      <div className="h-screen mx-auto my-2">
+    <main className="flex-none h-screen flex-col items-center justify-between">
+      <div className="h-full mx-auto">
         <Carousel loop>
           {xml.map((src, i) => {
             return (
-              <div className="h-screen w-auto flex-[0_0_100%] mx-auto my-2" key={i}>
-                <div className="relative">
+              <div className="w-auto h-full flex-[0_0_100%] mx-auto" key={i}>
+                <div className="relative h-5/6">
                   <Image
                     src={src.olCoverURL}
-                    width={600}
-                    height={600}
-                    className="object-contain coverImg mx-auto"
+                    fill={true}
+                    className="mx-auto object-contain rounded-md"
                     alt="alt"
                   />
                 </div>
-                <div className="relative caption mx-auto">
+                <div className="relative caption mx-auto h-1/6">
                   <h1 className="text-center font-bold">{src.title}</h1>
-                  <h1 className="text-center">by {src.author}</h1>
+                  <h1 className="text-center">{src.author}</h1>
                   <h1 className="text-center">Call Number: {src.callno}</h1>
+                  <h1 className="text-center">Received: {src.recDate}</h1>
                 </div>
               </div>
             );

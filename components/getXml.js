@@ -21,13 +21,9 @@ export default async function getXml() {
       
     async function getData(isbn) {
         const openLibMetadata = 'https://openlibrary.org/api/books?bibkeys=ISBN:' + isbn + '&format=json'
-        //console.log(openLibMetadata)
         const resp = await fetch(openLibMetadata)
-        // The return value is *not* serialized
-        // You can return Date, Map, Set, etc.
         
         if (!resp.ok) {
-            // This will activate the closest `error.js` Error Boundary
             throw new Error('Failed to fetch data')
         }
         return resp.json()
@@ -39,7 +35,9 @@ export default async function getXml() {
         if (typeof element !== "undefined") {
             const aLowerCase = element.toLowerCase()
             const authorCase = aLowerCase.toTitleCase()
-            return authorCase
+            const authorBy = "by " + authorCase
+            const authorClean = authorBy.replace(/, Author.*\.|, [0-9]{4}.*\./g, "");
+            return authorClean
         } else {
             console.log("NO AUTHOR")
             return ""
@@ -55,6 +53,9 @@ export default async function getXml() {
     const results = result.report.QueryResult.ResultXml.rowset.Row
     for (const r of results) {
         const item = {}
+        
+        const recDate = r.Column15
+        
         const title = r.Column7
         const cleanTitle = title.replace(/\/$|\.$/, "");
         const lowerCase = cleanTitle.toLowerCase()
@@ -71,11 +72,11 @@ export default async function getXml() {
 
         const data = await getData(isbn)
         const key = Object.keys(data)[0]
-        //console.log(key)
         try {
             if (data[key].hasOwnProperty('thumbnail_url')) {
                 const openLibrary = 'https://covers.openlibrary.org/b/isbn/' + isbn + '-L.jpg'
                 if (callnoStatus !== "In Processing") {
+                    item.recDate = recDate
                     item.title = titleCase
                     item.author = author
                     item.callno = callnoStatus
@@ -119,7 +120,6 @@ export default async function getXml() {
       
     const xml = await xmlres.text()
     const parsedResults = xmlParse(xml);
-    //console.log(await parsedResults)
     return await parsedResults
 
 }
