@@ -13,6 +13,7 @@ export default async function Home() {
   return (
     <main className="flex-none h-screen flex-col items-center justify-between">
       <div className="h-full mx-auto">
+        <h1 className="text-center font-bold pt-6 h-12 text-4xl">New Arrivals</h1>
         <Carousel loop>
           {xml.map((src, i) => {
             return (
@@ -21,7 +22,7 @@ export default async function Home() {
                   <Image
                     src={src.olCoverURL}
                     fill={true}
-                    className="mx-auto object-contain rounded-md"
+                    className="mx-auto object-contain"
                     alt="alt"
                   />
                 </div>
