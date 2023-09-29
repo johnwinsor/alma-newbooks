@@ -3,7 +3,9 @@ const parseString = require('xml2js').parseString;
 require('@gouch/to-title-case')
 
 export default async function getXml() {
-    const items = [] 
+    const items = []
+    // Set to true to filter items in processing (no permament call number)
+    const filterInProceesing = false;
     
     function parseXml(xml) {
         return new Promise((resolve, reject) => {
@@ -83,6 +85,14 @@ export default async function getXml() {
                     item.olCoverURL = openLibrary
                 
                     items.push(item)
+                } else if (!filterInProceesing) {
+                    item.recDate = recDate
+                    item.title = titleCase
+                    item.author = author
+                    item.callno = callnoStatus
+                    item.olCoverURL = openLibrary
+                
+                    items.push(item)
                 } else {
                     console.log("In Processing")
                 }
@@ -98,17 +108,8 @@ export default async function getXml() {
     return items;
     }
 
-    // GETTING ANALYTICS REPORT
-    // <sawx:expr xsi:type="sawx:comparison" op="greater">
-    // <sawx:expr xsi:type="sawx:sqlExpression">"Physical Item Details"."Receiving   Date"</sawx:expr>
-    // <sawx:expr xsi:type="xsd:date">2022-09-01</sawx:expr></sawx:expr>
-
-    // path = "%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks"
-
-    // https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks&limit=25&col_names=true&apikey=l8xx5852c9867ab64264901d17af13574837
-
     const xmlres = await fetch(
-    'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks&limit=100&col_names=true&apikey=l8xx5852c9867ab64264901d17af13574837',
+    'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports\?path\=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks\&limit\=100\&col_names\=true\&apikey\=l8xx5852c9867ab64264901d17af13574837\&filter\=%3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3Acomparison%22%20op%3D%22between%22%0A%20%20%20xmlns%3Asaw%3D%22com.siebel.analytics.web%2Freport%2Fv1.1%22%20%0A%20%20%20xmlns%3Asawx%3D%22com.siebel.analytics.web%2Fexpression%2Fv1.1%22%20%0A%20%20%20xmlns%3Axsi%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema-instance%22%20%0A%20%20%20xmlns%3Axsd%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%22%0A%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3AsqlExpression%22%3E%22Physical%20Item%20Details%22.%22Receiving%20%20%20Date%22%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-09-25%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-09-30%3C%2Fsawx%3Aexpr%3E%0A%3C%2Fsawx%3Aexpr%3E',
         {
         method: 'GET',
         headers: {
@@ -123,3 +124,25 @@ export default async function getXml() {
     return await parsedResults
 
 }
+
+
+ // GETTING ANALYTICS REPORT FILTER
+    // This allows you to apply filters dynalically in the API call rather than in the Analytics criteria filters.
+    // From Analytics Advanced Tab - Analysis XML
+    // 4 Namespaces added
+    // <sawx:expr xsi:type="sawx:comparison" op="between"
+    //     xmlns:saw="com.siebel.analytics.web/report/v1.1" 
+    //     xmlns:sawx="com.siebel.analytics.web/expression/v1.1" 
+    //     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    //     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    //     >
+    //     <sawx:expr xsi:type="sawx:sqlExpression">"Physical Item Details"."Receiving   Date"</sawx:expr>
+    //     <sawx:expr xsi:type="xsd:date">2023-08-01</sawx:expr>
+    //     <sawx:expr xsi:type="xsd:date">2023-09-30</sawx:expr>
+    // </sawx:expr>
+
+    // URL Encoded
+    // %3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3Acomparison%22%20op%3D%22between%22%0A%20%20%20xmlns%3Asaw%3D%22com.siebel.analytics.web%2Freport%2Fv1.1%22%20%0A%20%20%20xmlns%3Asawx%3D%22com.siebel.analytics.web%2Fexpression%2Fv1.1%22%20%0A%20%20%20xmlns%3Axsi%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema-instance%22%20%0A%20%20%20xmlns%3Axsd%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%22%0A%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3AsqlExpression%22%3E%22Physical%20Item%20Details%22.%22Receiving%20%20%20Date%22%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-08-01%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-09-30%3C%2Fsawx%3Aexpr%3E%0A%3C%2Fsawx%3Aexpr%3E
+
+    // Final API Call with date range filter:
+    // https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports\?path\=%2Fshared%2FNortheastern%20University%2FJohnShared%2FAPI%2FNewBooks\&limit\=100\&col_names\=true\&apikey\=l8xx5852c9867ab64264901d17af13574837\&filter\=%3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3Acomparison%22%20op%3D%22between%22%0A%20%20%20xmlns%3Asaw%3D%22com.siebel.analytics.web%2Freport%2Fv1.1%22%20%0A%20%20%20xmlns%3Asawx%3D%22com.siebel.analytics.web%2Fexpression%2Fv1.1%22%20%0A%20%20%20xmlns%3Axsi%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema-instance%22%20%0A%20%20%20xmlns%3Axsd%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%22%0A%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22sawx%3AsqlExpression%22%3E%22Physical%20Item%20Details%22.%22Receiving%20%20%20Date%22%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-08-01%3C%2Fsawx%3Aexpr%3E%0A%20%20%20%3Csawx%3Aexpr%20xsi%3Atype%3D%22xsd%3Adate%22%3E2023-09-30%3C%2Fsawx%3Aexpr%3E%0A%3C%2Fsawx%3Aexpr%3E
