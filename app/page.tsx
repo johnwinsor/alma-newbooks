@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <main className="flex-none h-screen flex-col items-center justify-between">
       <div className="h-full mx-auto">
-        <h1 className="text-center font-bold pt-6 h-12 text-3xl">New Arrivals</h1>
+        <div className="text-center font-bold pt-4 h-12 text-2xl">New Arrivals</div>
         <Carousel loop>
           {data.map((src:any, i:any) => {
             const callnoStatus = src.callNo.replace(/Unknown/g, "In Processing");
