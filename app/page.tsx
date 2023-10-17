@@ -5,8 +5,7 @@ import './css/embla.css'
 import { promises as fs } from 'fs';
 
 export default async function Home() {
-  //const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
-  const jsonString = await fs.readFile(process.cwd() + '../data.json', 'utf8');
+  const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
   const data = JSON.parse(jsonString);
   //console.log(data)
   return (
