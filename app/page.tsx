@@ -1,17 +1,12 @@
 import React from "react";
 import Image from 'next/image'
-//import getData from "@/components/getJson"
-//import getXml from "@/components/getXml"
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
 import { promises as fs } from 'fs';
 
 export default async function Home() {
-  //const data = await getData()
-  //console.log(data)
-  //const xml = await getXml()
-  //console.log(xml)
-  const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
+  //const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
+  const jsonString = await fs.readFile(process.cwd() + '../data.json', 'utf8');
   const data = JSON.parse(jsonString);
   //console.log(data)
   return (

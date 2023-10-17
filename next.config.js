@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '/alma-newbooks',
+    basePath: '/monitor',
     images: {
-        domains: ['covers.openlibrary.org', 'www.googleapis.com','books.google.com','picsum.photos'],
+        domains: ['covers.openlibrary.org', 'www.googleapis.com','books.google.com'],
     },
 }
 
