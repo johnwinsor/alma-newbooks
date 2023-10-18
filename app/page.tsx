@@ -4,23 +4,28 @@ import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
 import { promises as fs } from 'fs';
 
-export default async function Home() {
-  const response = await fetch(
-    'https://library.mills.edu/data.json',
+async function getData() {
+  const response = await fetch('https://library.mills.edu/data.json',
     {
       method: 'GET',
       headers: {
           'accept': 'application/json',
       },
     }
-    
   )
-  const data = await response.json()
-  
-  
+  if (!response.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return response.json()
+}
+
+export default async function Home() {
+  const data = await getData()
   //const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
- // const data = JSON.parse(jsonString);
-  console.log(data)
+  // const data = JSON.parse(jsonString);
+  //console.log(data)
   return (
     <main className="flex-none h-screen flex-col items-center justify-between">
       <div className="h-full mx-auto">
