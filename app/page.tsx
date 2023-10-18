@@ -2,7 +2,7 @@ import React from "react";
 import Image from 'next/image'
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
-import { promises as fs } from 'fs';
+const probe = require('probe-image-size');
 
 async function getData() {
   const response = await fetch('https://library.mills.edu/data.json',
@@ -21,11 +21,17 @@ async function getData() {
   return response.json()
 }
 
+// async function getImageSize(url: any) {
+//   const result = await probe(url)
+//     .then((response: any) => response)
+//     .then((image: any) => {
+//       //console.log(image.width)
+//       return image.width
+//     });
+// }
+
 export default async function Home() {
   const data = await getData()
-  //const jsonString = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
-  // const data = JSON.parse(jsonString);
-  //console.log(data)
   return (
     <main className="flex-none h-screen flex-col items-center justify-between">
       <div className="h-full mx-auto">
