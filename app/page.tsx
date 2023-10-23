@@ -6,7 +6,6 @@ import './css/embla.css'
 async function getData() {
   const response = await fetch('https://library.mills.edu/data.json',
     {
-      next: { revalidate: 10 },
       method: 'GET',
       headers: {
           'accept': 'application/json',
