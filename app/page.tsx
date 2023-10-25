@@ -3,8 +3,6 @@ import Image from 'next/image'
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
 
-export const revalidate = 120
-
 async function getData() {
   const response = await fetch('https://library.mills.edu/data.json',
     {
@@ -12,6 +10,7 @@ async function getData() {
       headers: {
           'accept': 'application/json',
       },
+      next: { revalidate: 120 }
     }
   )
   if (!response.ok) {
