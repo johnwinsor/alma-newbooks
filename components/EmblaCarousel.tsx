@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 import '../app/css/embla.css'
 
 const autoplayOptions = {
-  delay: 4000,
+  delay: 6000,
   stopOnInteraction: false,
 }
 
