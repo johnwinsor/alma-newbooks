@@ -10,7 +10,7 @@ async function getData() {
       headers: {
           'accept': 'application/json',
       },
-      next: { revalidate: 120 }
+      next: { revalidate: 3600 }
     }
   )
   if (!response.ok) {
