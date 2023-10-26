@@ -2,23 +2,13 @@ import React from "react";
 import Image from 'next/image'
 import Carousel from "@/components/EmblaCarousel";
 import './css/embla.css'
+import { promises as fs } from 'fs';
 
 async function getData() {
-  const response = await fetch('https://library.mills.edu/data.json',
-    {
-      method: 'GET',
-      headers: {
-          'accept': 'application/json',
-      },
-      next: { revalidate: 3600 }
-    }
-  )
-  if (!response.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
- 
-  return response.json()
+  const file = await fs.readFile(process.cwd() + '/data.json', 'utf8');
+  const data = JSON.parse(file);
+
+  return data
 }
 
 export default async function Home() {
