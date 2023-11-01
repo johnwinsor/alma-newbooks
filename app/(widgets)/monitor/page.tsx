@@ -14,7 +14,7 @@ async function getData() {
 export default async function Home() {
   const data = await getData()
   return (
-    <main className="flex-none h-screen flex-col items-center justify-between">
+    <main className="flex-none h-screen flex-col items-center justify-between bg-slate-900">
       <div className="h-full mx-auto">
         <div className="text-center font-bold pt-4 h-12 text-2xl">New Arrivals</div>
         <Carousel loop>
