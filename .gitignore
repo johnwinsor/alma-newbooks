@@ -38,3 +38,5 @@ app/data.json
 
 #Python
 *.py
+*out.txt
+*data.json:
