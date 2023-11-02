@@ -2,17 +2,10 @@ import React from "react";
 import Image from 'next/image'
 import Carousel from "@/components/EmblaCarousel";
 import '../css/embla.css'
-import { promises as fs } from 'fs';
-
-async function getData() {
-  const file = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
-  const data = JSON.parse(file);
-
-  return data
-}
+import { getData } from "@/app/(widgets)/data";
 
 export default async function Home() {
-  const data = await getData()
+  const data = await getData();
   return (
     <main className="flex-none h-screen flex-col items-center justify-between bg-slate-900">
       <div className="h-full mx-auto">
