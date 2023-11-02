@@ -40,3 +40,4 @@ app/data.json
 *.py
 *out.txt
 *data.json:
+__pycache__/
