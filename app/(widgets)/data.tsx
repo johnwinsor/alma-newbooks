@@ -4,8 +4,23 @@ import jsonFile from '@/app/data.json';
 import Carousel from "@/components/EmblaCarousel";
 import Image from 'next/image'
 
+async function getData() {
+  const res = await fetch('https://library.mills.edu/data.json', { next: { revalidate: 3600 } })
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return res.json()
+}
+
+
 export async function GetData() {
-    const data = jsonFile;
+    // const data = jsonFile;
+    const data = await getData()
 
     return (
         <main className="flex-none h-screen flex-col items-center justify-between bg-slate-900">
