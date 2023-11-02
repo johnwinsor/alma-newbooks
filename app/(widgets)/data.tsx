@@ -1,6 +1,3 @@
-'use client'
-
-import jsonFile from '@/app/data.json';
 import Carousel from "@/components/EmblaCarousel";
 import Image from 'next/image'
 
