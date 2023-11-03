@@ -37,7 +37,7 @@ app/data.json
 *data.json
 
 #Python
-*.py
+*googleBooksEnv.py
 *out.txt
 *data.json:
 __pycache__/
