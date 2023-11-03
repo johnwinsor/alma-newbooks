@@ -121,9 +121,11 @@ def getBooks():
             book['recDate'] = recDate
             
             callNo = row['Column10']
+            print(f"Call Number: {callNo}")
             book['callNo'] = callNo
             
             location = row['Column13']
+            print(f"Location: {location}")
             book['location'] = location
             
             googleBook = getSummary(isbn)
