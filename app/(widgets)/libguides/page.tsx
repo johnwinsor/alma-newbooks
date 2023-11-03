@@ -2,11 +2,13 @@ import React from "react";
 import Image from 'next/image'
 import Carousel from "@/components/EmblaCarousel";
 import '../css/embla.css'
-import { promises as fs } from 'fs';
 
 async function getData() {
-  const file = await fs.readFile(process.cwd() + '/app/data.json', 'utf8');
-  const data = JSON.parse(file);
+  const res = await fetch(
+    'https://library.mills.edu/data.json',
+    { cache: 'no-store' },
+  );
+  const data = await res.json()
 
   return data
 }
