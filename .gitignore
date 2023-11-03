@@ -37,6 +37,7 @@ app/data.json
 *data.json
 
 #Python
+.python-version
 *googleBooksEnv.py
 *out.txt
 *data.json:
