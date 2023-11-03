@@ -1,8 +1,9 @@
+// this page is not currently used. All this moved to widgets/monitor/page.tsx
 import Carousel from "@/components/EmblaCarousel";
 import Image from 'next/image'
 
 async function getData() {
-  const res = await fetch('https://library.mills.edu/data.json', { next: { revalidate: 3600 } })
+  const res = await fetch('https://library.mills.edu/data.json', { cache: 'no-store' })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
  
