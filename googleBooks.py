@@ -105,6 +105,7 @@ def getBooks():
             
             title = row['Column7']
             title = titlecase(title)
+            title = re.sub("\/", "", title)
             print(title)
             book['title'] = title
             
