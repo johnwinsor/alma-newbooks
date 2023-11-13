@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <main className="flex-none h-screen flex-col items-center justify-between bg-slate-900">
         <div className="h-full mx-auto">
-        <div className="text-center font-bold pt-4 h-12 text-2xl">New Arrivals</div>
+        <div className="text-center font-bold pt-4 h-12 text-2xl text-slate-50">New Arrivals</div>
         <Carousel loop>
           {data.map((src:any, i:any) => {
             let callnoStatus = src.callNo.replace(/Unknown/g, "In Processing");
