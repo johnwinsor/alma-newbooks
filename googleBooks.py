@@ -157,7 +157,7 @@ def getBooks():
                         print(f"No Google cover - Skipping title")
                         continue
                     else:
-                        print(f"Using Google Cover: {coverurl}")
+                        print(f"Using Google Cover: {googleCover}")
                         book['coverurl'] = googleCover
             else:
                 print("NO OPEN LIBRARY METADATA - Checking Google Books...")
@@ -166,7 +166,7 @@ def getBooks():
                     print(f"No Google cover - Skipping title")
                     continue
                 else:
-                    print(f"Using Google Cover: {coverurl}")
+                    print(f"Using Google Cover: {googleCover}")
                     book['coverurl'] = googleCover
             
             print(f"Checking image site for cover: {book['coverurl']}")
