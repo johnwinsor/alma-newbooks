@@ -190,7 +190,7 @@ def getBooks():
                     image_size = len(raw_content)
                     print(f"IMAGE-SIZE(none): {image_size}")
             
-            if int(image_size) > 10000:    
+            if int(image_size) > 15000:    
                 books.append(book)
                 count = count + 1
             else:
